@@ -1,0 +1,5 @@
+*.pth
+*.npy
+*.zip
+.idea
+
