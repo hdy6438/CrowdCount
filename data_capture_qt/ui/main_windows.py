@@ -1,9 +1,8 @@
-from PyQt5.Qt import QMainWindow,QCloseEvent
+from PyQt5.Qt import QMainWindow, QCloseEvent
 
 from data_capture_qt.source_handler.cap_handler import cap_handler
 from data_capture_qt.source_handler.file_handler import file_handler
 from data_capture_qt.ui.ui import Ui_Form
-
 
 
 class MYWindows(QMainWindow):
@@ -27,21 +26,21 @@ class MYWindows(QMainWindow):
             event.ignore()
 
     def set_btn_disabled(self):
+        self.can_close = False
         self.file_btn.setEnabled(False)
         self.cap_btn.setEnabled(False)
 
     def set_btn_enabled(self):
         self.file_btn.setEnabled(True)
         self.cap_btn.setEnabled(True)
+        self.can_close = True
 
     def use_cap(self):
-        self.can_close = False
         self.set_btn_disabled()
-        self.capture = cap_handler()
-        self.capture.begin(self)
+        self.capture = cap_handler(self)
+        self.capture.begin()
 
     def use_file(self):
-        self.can_close = False
         self.set_btn_disabled()
         self.file = file_handler(self)
         self.file.select()

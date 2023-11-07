@@ -1,6 +1,4 @@
-from PyQt5.Qt import QDialog,QDateTime,QDateTimeEdit,QPushButton,QVBoxLayout,QCloseEvent
-
-
+from PyQt5.Qt import QDialog, QDateTime, QDateTimeEdit, QPushButton, QVBoxLayout, QCloseEvent
 
 
 class DemoDateTimeEdit(QDialog):
@@ -37,7 +35,6 @@ class DemoDateTimeEdit(QDialog):
         vLayout.addWidget(self.dtEdit)
         vLayout.addWidget(self.confirm_btn)
         vLayout.addWidget(self.cancel_btn)
-
 
         self.setLayout(vLayout)
 

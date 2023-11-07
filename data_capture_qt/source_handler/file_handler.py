@@ -4,11 +4,9 @@ import time
 import cv2
 from PyQt5.Qt import *
 
-from data_capture_qt.until.setting import freq_sec
-from data_capture_qt.ui.date_time import  DemoDateTimeEdit
+from data_capture_qt.ui.date_time import DemoDateTimeEdit
 from data_capture_qt.until.frame_process import save_and_process
-
-
+from data_capture_qt.until.setting import freq_sec
 
 
 class file_handler:
@@ -34,9 +32,8 @@ class file_handler:
             Date_dialog = DemoDateTimeEdit(file_handler=self)
             Date_dialog.exec_()
 
-
-    def get_frame_time(self,idx):
-        print(idx,self.__file_time)
+    def get_frame_time(self, idx):
+        print(idx, self.__file_time)
         return int(time.time())
 
     def begin(self):
@@ -61,8 +58,5 @@ class file_handler:
 
         capture.release()
         cv2.destroyAllWindows()
-        self.set_btn_enable()
 
-    def set_btn_enable(self):
-        self.__app_win.set_btn_enabled()
-        self.__app_win.can_close = True
+        self.__app_win.set_btn_enable()

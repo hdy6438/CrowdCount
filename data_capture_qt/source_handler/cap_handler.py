@@ -3,18 +3,19 @@ import time
 
 import cv2
 
-from data_capture_qt.until.setting import freq_sec
 from data_capture_qt.until.frame_process import save_and_process
+from data_capture_qt.until.setting import freq_sec
 
 
 class cap_handler:
-    def __init__(self):
+    def __init__(self, app_win):
         self.__capture = cv2.VideoCapture(0)
         if not self.__capture.isOpened():
             exit()
         self.freq = self.__capture.get(cv2.CAP_PROP_FPS) * freq_sec
+        self.__app_win = app_win
 
-    def begin(self, app_win):
+    def begin(self):
 
         fid = 0
         while True:
@@ -33,5 +34,4 @@ class cap_handler:
         self.__capture.release()
         cv2.destroyAllWindows()
 
-        app_win.set_btn_enabled()
-        app_win.can_close = True
+        self.__app_win.set_btn_enable()
