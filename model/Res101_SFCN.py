@@ -102,3 +102,8 @@ class Bottleneck(nn.Module):
         out = self.relu(out)
 
         return out
+
+
+if __name__ == "__main__":
+    model = Res101_SFCN("predict")
+    print(model)
