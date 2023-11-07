@@ -3,7 +3,7 @@ import threading
 import cv2
 from PyQt5.QtCore import QDateTime
 
-from data_capture_qt.until.frame_process import save_and_process
+from data_capture_qt.until.frame_process import frame_process
 from data_capture_qt.until.setting import freq_sec
 
 
@@ -13,25 +13,33 @@ class cap_handler:
         if not self.__capture.isOpened():
             exit()
 
-        self.__freq = self.__capture.get(cv2.CAP_PROP_FPS) * freq_sec
         self.__app_win = app_win
         self.__file_time = None
+        self.__frame_process = frame_process()
+
 
     def begin(self):
-        self.__file_time = QDateTime.currentDateTime()
+        file_time = QDateTime.currentDateTime()
 
-        fid = 0
+        freq = self.__capture.get(cv2.CAP_PROP_FPS) * freq_sec
+
+        frame_id = 0
+        save_id = 0
         while True:
             ret, frame = self.__capture.read()
             if not ret:
                 break
-            cv2.imshow("Camera", frame)
+
+            cv2.imshow("Camera", cv2.resize(frame, (640, 360)))
+
             if cv2.waitKey(1) == ord('q'):
                 break
 
-            if fid % self.__freq == 0:
-                threading.Thread(target=save_and_process, args=(self.__file_time, fid, frame)).start()
-                fid += 1
+            if frame_id % freq == 0:
+                self.__frame_process.save_and_process(file_time, save_id, frame)
+                save_id +=1
+
+            frame_id += 1
 
         self.__capture.release()
         cv2.destroyAllWindows()

@@ -1,10 +1,8 @@
-import threading
-
 import cv2
 from PyQt5.Qt import *
 
 from data_capture_qt.ui.date_time import DateTimeEdit
-from data_capture_qt.until.frame_process import save_and_process
+from data_capture_qt.until.frame_process import frame_process
 from data_capture_qt.until.setting import freq_sec
 
 
@@ -13,6 +11,7 @@ class file_handler:
         self.__file_path = None
         self.__file_time = None
         self.app_win = app_win
+        self.__frame_process = frame_process()
 
     def set_file_time(self, file_time):
         self.__file_time = file_time
@@ -38,20 +37,25 @@ class file_handler:
         capture = cv2.VideoCapture(self.__file_path)
         if not capture.isOpened():
             exit()
+
         freq = capture.get(cv2.CAP_PROP_FPS) * freq_sec
 
-        fid = 0
+        frame_id = 0
+        save_id = 0
         while True:
             ret, frame = capture.read()
             if not ret:
                 break
+
             cv2.imshow("Camera", cv2.resize(frame, (640, 360)))
 
             cv2.waitKey(1)
 
-            if fid % freq == 0:
-                threading.Thread(target=save_and_process, args=(self.__file_time, fid, frame)).start()
-                fid += 1
+            if frame_id % freq == 0:
+                self.__frame_process.save_and_process(self.__file_time, save_id, frame)
+                save_id += 1
+
+            frame_id += 1
 
         capture.release()
         cv2.destroyAllWindows()

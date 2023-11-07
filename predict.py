@@ -31,7 +31,7 @@ if __name__ == "__main__":
     predictor = predictor()
 
     while True:
-        pred, pred_map = predictor.predict_img(input("path==>"))
-        print(pred)
-        draw_map(pred_map)
+        num, pmap = predictor.predict_img(input("path==>"))
+        print(num)
+        draw_map(pmap)
 

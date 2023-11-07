@@ -1,5 +1,6 @@
 *.pth
 *.npy
+*.npz
 *.zip
 .idea
 

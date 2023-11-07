@@ -1,11 +1,27 @@
-import time
+from concurrent.futures import ThreadPoolExecutor
 
 import cv2
+import numpy as np
+from PIL import Image
 from PyQt5.QtCore import QDateTime
 
+from data_capture_qt.until.setting import freq_sec
+from predict import predictor
 
-def save_and_process(file_time: QDateTime, fid: int, frame):
-    print(file_time)
-    print("save")
-    img_name = f"H:\\CrowdCount\\datasets\\crowd_count_time_seq_dataset\\imgs\\{time.time()}.jpg"
-    cv2.imwrite(img_name, frame)
+
+class frame_process:
+    def __init__(self):
+        self.__pool = ThreadPoolExecutor(max_workers=2)
+        self.__model = predictor()
+
+    def save_and_process(self, file_time: QDateTime, save_id: int, frame):
+        def do():
+            frame_time = file_time.addSecs(save_id * freq_sec)
+            print(frame_time, "processing")
+            img_pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            num, pmap = self.__model.predict_img(img_pil)
+            np.savez(f"H:\\CrowdCount\\datasets\\crowd_count_time_seq_dataset\\{frame_time.toSecsSinceEpoch()}", density=num, density_map=pmap, image=frame)
+            print(frame_time, "done")
+
+
+        self.__pool.submit(do)

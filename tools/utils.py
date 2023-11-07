@@ -56,11 +56,10 @@ class predict_img_loader:
             standard_transforms.Normalize(*dataset.mean_std)
         ])
 
-    def load(self, path=None, pil_img=None):
-        if path is not None:
-            img = Image.open(path)  # 打开图片
-        else:
-            img = pil_img
+    def load(self, img):
+        if type(img) == str:
+            img = Image.open(img)  # 打开图片
+
 
         if img.mode == 'L':
             img = img.convert('RGB')
