@@ -30,6 +30,9 @@ class file_handler:
 
             Date_dialog = DateTimeEdit(file_handler=self)
             Date_dialog.exec_()
+        else:
+            self.app_win.set_btn_enabled()
+
 
     def begin(self):
         capture = cv2.VideoCapture(self.__file_path)

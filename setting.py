@@ -22,4 +22,4 @@ class dataset:
 
 
 class predict:
-    model_path = "H:\CrowdCount\model\res\all_ep_64_mae_8.5_mse_14.1.pth"
+    model_path = "H:\\CrowdCount\\model\\res\\all_ep_64_mae_8.5_mse_14.1.pth"
