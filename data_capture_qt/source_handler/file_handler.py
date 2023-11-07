@@ -2,16 +2,15 @@ import cv2
 from PyQt5.Qt import *
 
 from data_capture_qt.ui.date_time import DateTimeEdit
-from data_capture_qt.until.frame_process import frame_process
 from data_capture_qt.until.setting import freq_sec
 
 
 class file_handler:
-    def __init__(self, app_win):
+    def __init__(self, app_win, frame_processor):
         self.__file_path = None
         self.__file_time = None
         self.app_win = app_win
-        self.__frame_process = frame_process()
+        self.__frame_processor = frame_processor
 
     def set_file_time(self, file_time):
         self.__file_time = file_time
@@ -32,7 +31,6 @@ class file_handler:
         else:
             self.app_win.set_btn_enabled()
 
-
     def begin(self):
         capture = cv2.VideoCapture(self.__file_path)
         if not capture.isOpened():
@@ -52,7 +50,7 @@ class file_handler:
             cv2.waitKey(1)
 
             if frame_id % freq == 0:
-                self.__frame_process.save_and_process(self.__file_time, save_id, frame)
+                self.__frame_processor.save_and_process(self.__file_time, save_id, frame)
                 save_id += 1
 
             frame_id += 1

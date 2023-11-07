@@ -3,7 +3,7 @@ import torch
 
 from model.CC import CrowdCounter
 from setting import predict
-from tools.utils import predict_img_loader,draw_map
+from tools.utils import predict_img_loader, draw_map
 
 
 class predictor:
@@ -34,4 +34,3 @@ if __name__ == "__main__":
         num, pmap = predictor.predict_img(input("path==>"))
         print(num)
         draw_map(pmap)
-

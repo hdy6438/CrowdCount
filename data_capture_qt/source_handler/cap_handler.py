@@ -1,22 +1,18 @@
-import threading
-
 import cv2
 from PyQt5.QtCore import QDateTime
 
-from data_capture_qt.until.frame_process import frame_process
 from data_capture_qt.until.setting import freq_sec
 
 
 class cap_handler:
-    def __init__(self, app_win):
+    def __init__(self, app_win, frame_processor):
         self.__capture = cv2.VideoCapture(0)
         if not self.__capture.isOpened():
             exit()
 
         self.__app_win = app_win
         self.__file_time = None
-        self.__frame_process = frame_process()
-
+        self.__frame_processor = frame_processor
 
     def begin(self):
         file_time = QDateTime.currentDateTime()
@@ -36,8 +32,8 @@ class cap_handler:
                 break
 
             if frame_id % freq == 0:
-                self.__frame_process.save_and_process(file_time, save_id, frame)
-                save_id +=1
+                self.__frame_processor.save_and_process(file_time, save_id, frame)
+                save_id += 1
 
             frame_id += 1
 

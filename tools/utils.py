@@ -60,7 +60,6 @@ class predict_img_loader:
         if type(img) == str:
             img = Image.open(img)  # 打开图片
 
-
         if img.mode == 'L':
             img = img.convert('RGB')
         img = self.__img_transform(img)
