@@ -70,3 +70,5 @@ def draw_map(matrix):
     plt.imshow(matrix, cmap='gray', interpolation='nearest')
     plt.colorbar()
     plt.show()
+    plt.cla()
+

@@ -4,3 +4,4 @@
 *.zip
 .idea
 
+/predict_output/

@@ -21,12 +21,15 @@ class cap_handler:
 
         frame_id = 0
         save_id = 0
+
+        reshape = (int(self.__capture.get(cv2.CAP_PROP_FRAME_WIDTH) // 2), int(self.__capture.get(cv2.CAP_PROP_FRAME_HEIGHT) // 2))
+
         while True:
             ret, frame = self.__capture.read()
             if not ret:
                 break
 
-            cv2.imshow("Camera", cv2.resize(frame, (640, 360)))
+            cv2.imshow("Camera", cv2.resize(frame, reshape))
 
             if cv2.waitKey(1) == ord('q'):
                 break

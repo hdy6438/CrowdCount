@@ -40,12 +40,15 @@ class file_handler:
 
         frame_id = 0
         save_id = 0
+
+        reshape = (int(capture.get(cv2.CAP_PROP_FRAME_WIDTH) // 2), int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT) // 2))
+
         while True:
             ret, frame = capture.read()
             if not ret:
                 break
 
-            cv2.imshow("Camera", cv2.resize(frame, (640, 360)))
+            cv2.imshow("Camera", cv2.resize(frame, reshape))
 
             cv2.waitKey(1)
 
