@@ -63,7 +63,7 @@ class predict_img_loader:
         if img.mode == 'L':
             img = img.convert('RGB')
         img = self.__img_transform(img)
-        return Variable(img[None, :, :, :]).cuda()
+        return Variable(img[None, :, :, :])
 
 
 def draw_map(matrix):

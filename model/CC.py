@@ -1,5 +1,6 @@
 import torch.nn as nn
 
+import setting
 from .Res101_SFCN import Res101_SFCN
 
 
@@ -7,7 +8,12 @@ class CrowdCounter(nn.Module):
     def __init__(self, mode="train"):
         super(CrowdCounter, self).__init__()
         self.loss_mse = None
-        self.CCN = Res101_SFCN(mode).cuda()
+
+        if setting.gpu:
+            self.CCN = Res101_SFCN(mode).cuda()
+        else:
+            self.CCN = Res101_SFCN(mode)
+
         self.loss_mse_fn = nn.MSELoss()
 
     @property
