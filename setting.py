@@ -1,4 +1,4 @@
-gpu = False
+gpu = True
 
 
 class training:
